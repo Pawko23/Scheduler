@@ -11,15 +11,16 @@ import {
   ViewSwitcher
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-const schedulerData = [
-  { startDate: '2024-09-04T09:45', endDate: '2024-09-04T11:00', title: 'Meeting' },
-  { startDate: '2024-09-04T12:00', endDate: '2024-09-04T13:30', title: 'Go to a gym' },
-]
 
 function App() {
 
   const [currentDate, setCurrentDate] = useState('2024-09-04');
   const [currentView, setCurrentView] = useState('Day');
+
+  const schedulerData = [
+    { startDate: '2024-09-04T09:45', endDate: '2024-09-04T11:00', title: 'Meeting' },
+    { startDate: '2024-09-04T12:00', endDate: '2024-09-04T13:30', title: 'Go to a gym' },
+  ]
 
   const handleViewChange = (view) => {
     setCurrentView(view);

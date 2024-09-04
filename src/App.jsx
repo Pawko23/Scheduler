@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -20,13 +20,6 @@ function App() {
 
   const [currentDate, setCurrentDate] = useState('2024-09-04');
   const [currentView, setCurrentView] = useState('Day');
-
-
-  const handlePropertyChange = useCallback((e) => {
-    if(e.name === 'currentDate') {
-        setCurrentDate(e.value);
-    }
-  }, [])
 
   const handleViewChange = (view) => {
     setCurrentView(view);

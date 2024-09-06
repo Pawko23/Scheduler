@@ -47,6 +47,37 @@ function App() {
 
   console.log(appointments);
 
+
+  const addAppointment = async (newAppointment) => {
+    try {
+      await addDoc(collection(firestore, 'appointments'), newAppointment);
+      fetchAppointments();
+    } catch (error) {
+      console.error("Adding appointment failed...", error);
+    }
+  }
+
+  const editAppointment = async (id, updatedAppointment) => {
+    try {
+      const appointmentDoc = doc(firestore, 'appointments', id);
+      await updateDoc(appointmentDoc, updatedAppointment);
+      fetchAppointments();
+    } catch (error) {
+      console.error("Editing appointment failed...", error);
+    }
+  }
+
+  const deleteAppointment = async (id) => {
+    try {
+      const appointmentDoc = doc(firestore, 'appointments', id);
+      await deleteDoc(appointmentDoc);
+      fetchAppointments();
+    } catch (error) {
+      console.error("Deleting appointemt failed...", error);
+    }
+  }
+
+
   return (
     <Paper>
       <Scheduler data={appointments}>

@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { firestore } from './firebase/firebase';
+
 import Paper from '@mui/material/Paper';
+
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
@@ -14,21 +18,38 @@ import {
 
 function App() {
 
+  const [appointments, setAppointments] = useState([]);
   const [currentDate, setCurrentDate] = useState('2024-09-04');
   const [currentView, setCurrentView] = useState('Day');
 
-  const schedulerData = [
-    { startDate: '2024-09-04T09:45', endDate: '2024-09-04T11:00', title: 'Meeting' },
-    { startDate: '2024-09-04T12:00', endDate: '2024-09-04T13:30', title: 'Go to a gym' },
-  ]
+  const fetchAppointments = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(firestore, 'appointments'))
+
+      const data = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      setAppointments(data);
+    } catch (error) {
+      console.error("Fetching appointments failed...", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
 
   const handleViewChange = (view) => {
     setCurrentView(view);
   }
 
+  console.log(appointments);
+
   return (
     <Paper>
-      <Scheduler data={schedulerData}>
+      <Scheduler data={appointments}>
         
         <ViewState 
           currentDate={currentDate} 

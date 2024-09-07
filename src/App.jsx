@@ -93,7 +93,19 @@ function App() {
       }
       
       if (deleted !== undefined) {
-        newData = newData.filter(appointment => appointment.id !== deleted);
+        try {
+          const appointmentToDelete = newData.find(appointment => appointment.id === deleted);
+          if(!appointmentToDelete) {
+            console.error(`No matching appointment found for ID: ${deleted}`);
+            return;
+          }
+
+          await deleteDoc(doc(firestore, 'appointments', appointmentToDelete.id));
+
+          newData = newData.filter(appointment => appointment.id !== deleted);
+        } catch (error) {
+          console.error("Error deleting document: ", error);
+        }
       }
 
       setData(newData);

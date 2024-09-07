@@ -16,10 +16,18 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 
 function App() {
-  const [data, setData] = useState([]);
-  const [currentDate, setCurrentDate] = useState('2024-09-04');
-  const [currentView, setCurrentView] = useState('Day');
 
+  const actualDate = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  const [data, setData] = useState([]);
+  const [currentDate, setCurrentDate] = useState(actualDate());
+  const [currentView, setCurrentView] = useState('Day');
 
   const fetchAppointments = async () => {
     try {
@@ -38,7 +46,6 @@ function App() {
         };
       });
       
-      console.log(appointments);
       setData(appointments);
     } catch (error) {
       console.error("Fetching appointments failed...", error);
@@ -57,8 +64,12 @@ function App() {
   const commitChanges = async ({ added, changed, deleted }) => {
       let newData = [...data];
       if (added) {
-        const startingAddedId = newData.length > 0 ? newData[newData.length - 1].id + 1 : 0;
-        newData = [...newData, { id: startingAddedId, ...added }];
+        try {
+          const docRef = await addDoc(collection(firestore, 'appointments'), added);
+          newData = [...newData, { id: docRef.id, ...added }];
+        } catch (error) {
+          console.error("Error adding document: ", error);
+        }
       }
       if (changed) {
         const changedIds = Object.keys(changed);

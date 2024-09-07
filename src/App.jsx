@@ -24,16 +24,27 @@ function App() {
   const fetchAppointments = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'appointments'));
-      const appointments = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const appointments = querySnapshot.docs.map(doc => {
+        const data = doc.data();
+  
+        const startDate = data.startDate.toDate();
+        const endDate = data.endDate.toDate();
+  
+        return {
+          id: doc.id,
+          ...data,
+          startDate,
+          endDate
+        };
+      });
+      
       console.log(appointments);
       setData(appointments);
     } catch (error) {
       console.error("Fetching appointments failed...", error);
     }
-  }
+  };
+  
 
   useEffect(() => {
     fetchAppointments();
@@ -56,7 +67,7 @@ function App() {
           const changedAppointment = changed[tempId];
           try {
             const appointmentToUpdate = newData.find(appointment => appointment.id === tempId);
-            
+
             if (!appointmentToUpdate) {
               console.error(`No matching appointment found for temp ID: ${tempId}`);
               continue;
@@ -69,7 +80,7 @@ function App() {
               console.error(`No document to update: ${appointmentToUpdate.id}`);
               continue;
             }
-
+            
             await updateDoc(docRef, changedAppointment);
             newData = newData.map(appointment =>
               appointment.id === appointmentToUpdate.id ? { ...appointment, ...changedAppointment } : appointment
@@ -84,6 +95,8 @@ function App() {
       if (deleted !== undefined) {
         newData = newData.filter(appointment => appointment.id !== deleted);
       }
+
+      setData(newData);
   };
 
   return (
@@ -104,6 +117,8 @@ function App() {
         <Appointments />
         <AppointmentTooltip 
           showOpenButton
+          showDeleteButton
+          showCloseButton
         />
         <AppointmentForm/>
         <Toolbar />

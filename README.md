@@ -28,3 +28,9 @@ The application is open for new features, such as:
 * User authentication to allow users to manage their personal appointments
 * Nottifications or reminders of the upcoming events
 * Enhanced UI/UX improvements
+
+## Data Access Limitations
+
+In order to ensure security of the application and protect the data, the following Firestore security rules are currently in place:
+- **Read**: All users are allowed to read data from the Firestore Database
+- **Write (Add, Edit, Delete)**: Since there is not any authorization system implemented in the application, all write operations are blocked. Users cannot add, edit or delete data.

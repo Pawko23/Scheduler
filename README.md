@@ -10,15 +10,17 @@ This is a simple **Scheduler** application that allows users to create, edit and
 * **Firestore Integration**: All apointments are saved and updated in real-time using Firestore as the database
 
 ## Technologies
+
 * **React**: The front-end of the app is built with React
 * **React Scheduler** Library: A third-party library used to display and manage the scheduling calendar
 * **Firebase Firestore**: A NoSQL database used to store and synchronize appointment data
 
 ## Instalation
+
 1. Clone the repo with ```git clone https://github.com/Pawko23/Scheduler.git```
 2. Navigate to the ```Scheduler``` directory
 3. Run ```npm install``` to install all the necessary packages
-4. Run ```npm run dev```. App will be available at ```http://localhost:5173/```
+4. Run ```npm start```. App will be available at ```http://localhost:5173/```
 
 ## Future Improvements
 

@@ -1,6 +1,6 @@
 # React Scheduler App
 
-This is a simple **Scheduler** application that allows users to create, edit and delete appointments on a calendar. The application is connected to a Firestore databasee, ensuring that all appointments are stored and updated in real-time.
+This is a simple **Scheduler** application that allows users to create, edit and delete appointments on a calendar. The application is connected to a Firestore databasee, ensuring that all appointments are stored and updated in real-time. Application is available at: [https://pawko23.github.io/Scheduler/](https://pawko23.github.io/Scheduler/)
 
 ## Features
 
@@ -17,6 +17,9 @@ This is a simple **Scheduler** application that allows users to create, edit and
 
 ## Instalation
 
+Open the application online: [https://pawko23.github.io/Scheduler/](https://pawko23.github.io/Scheduler/)
+
+Or setup the application in your IDE:
 1. Clone the repo with ```git clone https://github.com/Pawko23/Scheduler.git```
 2. Navigate to the ```Scheduler``` directory
 3. Run ```npm install``` to install all the necessary packages
